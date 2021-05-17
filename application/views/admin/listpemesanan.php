@@ -4,6 +4,7 @@
      <!-- Page Heading -->
      <h1 class="h3 mb-4 text-gray-800">Daftar pemesanan</h1>
      <!-- content -->
+     <?= $this->session->flashdata('message') ?>
      <div class="container">
          <table class="table table-hover">
              <thead>
