@@ -31,11 +31,11 @@ class Menu_model extends CI_Model
             return $result = $data;
         }
     }
-    public function saveTiket($jumlah)
+    public function saveTiket($id, $dewasa, $anak)
     {
         // membuat kode pemesanan
-        $id = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $id = $id['id'];
+        $userid = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $userid = $userid['id'];
         $asal = $this->input->post('asal');
         $asal = strtoupper($asal);
         $asalBaru = str_split($asal, 3)[0];
@@ -45,17 +45,15 @@ class Menu_model extends CI_Model
         $tgl = date('dm');
         $kode = $tgl . $asalBaru . $tujuanBaru;
         $data = [
-            'tgl_pemesanan' => date('Y-m-d'),
+            'id_user' => $userid,
             'kode_pemesanan' => $kode,
-            'jumlah_pesanan' => $jumlah,
-            'id_jadwal' => (int)$_POST['id'],
-            'id_user' => $id
+            'tgl_pemesanan' => date('Y-m-d'),
+            'dewasa' => $dewasa,
+            'id_jadwal' => $id,
+            'anak' => $anak
 
         ];
-        $result = $this->db->insert('pemesanan', $data);
-        if ($this->db->affected_rows($result) == 1) {
-            return true;
-        }
+        $this->db->insert('pemesanan', $data);
     }
     public function listpemesanan()
     {
@@ -68,5 +66,15 @@ class Menu_model extends CI_Model
     {
         $sql = "SELECT * from passenger join pemesanan on passenger.id_pemesanan=pemesanan.id_pemesanan where pemesanan.id_pemesanan=$id";
         return $this->db->query($sql)->result_array();
+    }
+    // cek gambar di dalam tabel pembayaran by id
+    public function cekGambar()
+    {
+        $id = $this->input->post('id');
+        // return $this->db->get_where('pembayaran', ['id', $this->input->post('icd')])->row_array();
+        return $this->db->select('gambar')->from('tiket')
+            ->join('pembayaran', 'tiket.id_pembayaran=pembayaran.id')
+            ->join('pemesanan', 'tiket.id_pemesanan=pemesanan.id_pemesanan')
+            ->where('id_pemesanan', $id)->get()->row_array();
     }
 }

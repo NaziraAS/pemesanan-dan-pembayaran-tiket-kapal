@@ -8,8 +8,10 @@ class Menu extends CI_Controller
         parent::__construct();
         $this->load->model('Menu_model', 'menu');
     }
+    // halaman utama
     public function index()
     {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->form_validation->set_rules('asal', 'Asal', 'required|trim', [
             'required' => 'Kolom Asal Harus Di Isi!'
         ]);
@@ -28,23 +30,27 @@ class Menu extends CI_Controller
             $this->load->view('menu/V_Menu', $data);
             $this->load->view('layout_menu/footer');
         } else {
-            $data = $_POST['jumlah'];
-            $this->daftar($data);
+            // jumlah penumpang yang di inputkan oleh user
+            $dewasa = $_POST['dewasa'];
+            $anak = $_POST['anak'];
+            // jalankan method daftar redirect ke controller reservasi
+            $this->daftar($dewasa, $anak);
         }
     }
-    public function daftar($jumlah)
+    public function daftar($dewasa, $anak)
     {
-        $data['jumlah'] = $jumlah;
+        $data['dewasa'] = $dewasa;
+        $data['anak'] = $anak;
         $data['data'] = $this->menu->search();
         $data['title'] = "Halaman Reservasi";
         $this->load->view('layout/header', $data);
         $this->load->view('reservasi/reservasi', $data);
         $this->load->view('layout_menu/footer');
     }
-    public function pesan($jumlah)
+    public function pesan($id, $dewasa, $anak)
     {
         if ($this->session->userdata('email')) {
-            $this->menu->saveTiket($jumlah);
+            $this->menu->saveTiket($id, $dewasa, $anak);
             redirect('Pemesanan');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">

@@ -18,27 +18,24 @@ class Admin extends CI_Controller
         $data['jadwal'] = $this->Jadwal_M->view();
         $data['user'] = $user['namalengkap'];
         $data['title'] = "Halaman Admin";
-        $this->load->view('layout/header', $data);
-        $this->load->view('layout/sidebar');
-        $this->load->view('layout/navbar', $data);
-        $this->load->view('admin/V_Admin', $data);
-        $this->load->view('layout/footer');
-    }
-    public function insert()
-    {
+        // form validation
         $this->form_validation->set_rules('tgl', 'tanggal keberangkatan', 'required');
+        $this->form_validation->set_rules('jam', 'Jam', 'required');
         $this->form_validation->set_rules('asal', 'Asal', 'required');
         $this->form_validation->set_rules('tujuan', 'Tujuan', 'required');
         $this->form_validation->set_rules('kelas', 'Kelas', 'required');
         $this->form_validation->set_rules('harga', 'harga', 'required');
+        $this->form_validation->set_rules('jumlah', 'jumlah', 'required');
         if ($this->form_validation->run() == false) {
+            $this->load->view('layout/header', $data);
+            $this->load->view('layout/sidebar');
+            $this->load->view('layout/navbar', $data);
+            $this->load->view('admin/V_Admin', $data);
+            $this->load->view('layout/footer');
+        } else {
+            $data = $this->Jadwal_M->add();
             redirect('Admin');
-            // echo "gagal";
         }
-        $data = $this->Jadwal_M->add();
-        // var_dump($data);
-        // die;
-        redirect('Admin');
     }
     public function edit($id)
     {
@@ -55,7 +52,7 @@ class Admin extends CI_Controller
         // var_dump($data);
         // die;
     }
-    public function insertUpdate($id)
+    public function Update($id)
     {
         $result = $this->Jadwal_M->simpanUpdate($id);
         if ($result) {
@@ -90,8 +87,8 @@ class Admin extends CI_Controller
         $config = [
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'aimme1786@gmail.com',
-            'smtp_pass' => 'kopisoda123',
+            'smtp_user' => 'jaddihtanh@gmail.com',
+            'smtp_pass' => 'jaddih123',
             'smtp_port' => 465,
             'mailtype' => 'html',
             'charset' => 'utf-8',
@@ -117,9 +114,10 @@ class Admin extends CI_Controller
             <h6 style=\"padding:0 0 0 10px;\">" . $tglberangkat . "</h6>
             <h6 style=\"padding:0 0 0 10px;\">" . $nominal . "</h6>";
         $laporan .= "</td></tr></table>";
+        $this->load->library('email', $config);
         $this->email->initialize($config);
-        $this->email->from('aimme1786@gmail.com', 'PLN Dolan Oasis');
-        $this->email->to($email);
+        $this->email->from('jaddihtanh@gmail.com', 'PLN Dolan Oasis');
+        $this->email->to('oncobong46@gmail.com');
         $this->email->subject('Tiket Kapal');
         $this->email->message($laporan);
         if ($this->email->send()) {
@@ -148,7 +146,6 @@ class Admin extends CI_Controller
     }
     public function detail($id)
     {
-        $data['title'] = "Halaman Admin";
         $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['jadwal'] = $this->Jadwal_M->view();
         $data['user'] = $user['namalengkap'];
@@ -158,5 +155,24 @@ class Admin extends CI_Controller
         $this->load->view('layout/navbar', $data);
         $this->load->view('admin/detailpemesanan', $data);
         $this->load->view('layout/footer');
+    }
+    public function info($id)
+    {
+        $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['user'] = $user['namalengkap'];
+        $data['title'] = "Bukti transfer";
+        $data['gambar'] = $this->Jadwal_M->uploadbukti($id);
+        // var_dump($data['gambar']);
+        // die;
+        $this->load->view('layout/header', $data);
+        $this->load->view('layout/sidebar');
+        $this->load->view('layout/navbar', $data);
+        $this->load->view('admin/info', $data);
+        $this->load->view('layout/footer');
+    }
+    public function cekGambar()
+    {
+        // echo json_encode($this->Menu_model->cekGambar()); 
+        echo json_encode($this->Menu_model->cekGambar());
     }
 }

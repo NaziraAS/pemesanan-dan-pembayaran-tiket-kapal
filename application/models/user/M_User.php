@@ -46,7 +46,7 @@ class M_User extends CI_Model
             } elseif ($data['level'] == 'user') {
                 if (password_verify($password, $data['password'])) {
                     $data = [
-                        'email' => $data['email']
+                        'email' => $data['email'],
                     ];
                     $this->session->set_userdata($data);
                     redirect('Menu');

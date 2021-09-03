@@ -7,14 +7,21 @@
         <div class="col-md-6">
             <?php foreach ($edit as $e) :
             ?>
-                <form action="<?= base_url('Admin/insertUpdate/') . $e['id'] ?>" method="post">
+                <form action="<?= base_url('Admin/Update/') . $e['id'] ?>" method="post">
                     <input type="hidden" class="form-control" name="idEdit" value="">
-                    <div class="form-group">
-                        <label for="tgl">Tanggal Keberangkatan</label>
-                        <input type="date" class="form-control" name="tglEdit" id="tgl" value="<?= $e['tglBerangkat'] ?>">
-                        <?php echo form_error('tanggalkeberangkatan', '<div class="text-danger">', '</div>'); ?>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="tgl">Tanggal Keberangkatan</label>
+                            <input type="date" class="form-control" name="tglEdit" id="tgl" value="<?= $e['tglBerangkat'] ?>">
+                            <?php echo form_error('tanggalkeberangkatan', '<div class="text-danger">', '</div>'); ?>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="jam">Jam</label>
+                            <input type="time" class="form-control" name="jamEdit" id="jam" value="<?= $e['jam'] ?>">
+                            <?php echo form_error('jam', '<div class="text-danger">', '</div>'); ?>
+                        </div>
                     </div>
-                    <div class=" form-row">
+                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="asal">Asal</label>
                             <input type="text" class="form-control" name="asalEdit" id="asal" value="<?= $e['asal'] ?>">
@@ -42,6 +49,11 @@
                             <input type="text" class="form-control" name="hargaEdit" id="harga" value="<?= $e['harga'] ?>">
                         </div>
                         <?php echo form_error('harga', '<div class="text-danger">', '</div>'); ?>
+                        <div class="form-group col-md">
+                            <label for="jumlah">Jumlah</label>
+                            <input type="text" class="form-control" name="jumlahEdit" id="jumlah" value="<?= $e['jumlah'] ?>">
+                        </div>
+                        <?php echo form_error('jumlah', '<div class="text-danger">', '</div>'); ?>
                     </div>
                     <div class="row">
                         <div class="col-md text-right">

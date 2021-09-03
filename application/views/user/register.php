@@ -2,7 +2,7 @@
 
     <div class="container">
 
-        <div class="card o-hidden border-0 shadow-lg my-2 col-md-6 mx-auto">
+        <div class="card o-hidden border-0 shadow-lg my-2 col-md-6 mx-auto mt-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
@@ -34,18 +34,11 @@
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Register Account
                                 </button>
-                                <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a>
                             </form>
                             <hr>
-                            <div class="text-center">
+                            <!-- <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
+                            </div> -->
                             <div class="text-center">
                                 <a class="small" href="<?= base_url('Auth'); ?>">Already have an account? Login!</a>
                             </div>

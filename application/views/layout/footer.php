@@ -38,37 +38,126 @@
  </div>
  <!-- Optional JavaScript; choose one of the two! -->
 
- <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
- <!-- Bootstrap core JavaScript-->
- <script src="<?= base_url('sources/boo otstrap/js/'); ?>bootstrap/js/bootstrap.bundle.min.js"></script>
- <script src="<?= base_url('sources/sbadmin/'); ?>vendor/jquery/jquery.min.js"></script>
- <!-- Core plugin JavaScript-->
- <script src="<?= base_url('sources/sbadmin/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
- <!-- Custom scripts for all pages-->
- <!-- Custom scripts for all pages-->
+
+ <script src="<?= base_url('sources/js/'); ?>jquery.js"></script>
+ <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+ <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script> -->
+ <script src="<?= base_url('sources/bootstrap/'); ?>js/bootstrap.bundle.min.js"></script>
+ <!-- <script src="<?= base_url('sources/sbadmin/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script> -->
  <script src="<?= base_url('sources/sbadmin/'); ?>js/sb-admin-2.min.js"></script>
- <!-- Page level plugins -->
- <script src="<?= base_url('sources/abadmin/'); ?>vendor/chart.js/Chart.min.js"></script>
- <!-- Page level custom scripts -->
- <script src="<?= base_url('sources/sbadmin/'); ?>js/demo/chart-area-demo.js"></script>
- <script src="<?= base_url('sources/sbadmin/'); ?>js/demo/chart-pie-demo.js"></script>
- <script src="<?= base_url('sources/sbadmin/'); ?>js/sb-admin-2.min.js"></script>
- <script src="<?= base_url('sources/sbadmin/'); ?>js/bootstrap.min.js"></script>
+ <script src="<?= base_url('sources/bootstrap/'); ?>js/bootstrap.min.js"></script>
+ <script src="<?= base_url('js/sw/sweetalert2.all.js') ?>"></script>
  <script src="<?= base_url('sources/js/script.js'); ?>"></script>
- <!-- <script>
-     let jam = document.getElementById('jam');
-     jam.addEventListener('click', function() {
-         alert('hallo');
+ <script>
+     let base_url = 'http://localhost/tiket_kapal/'
+     //  event on click
+     $('.send').on('click', function(e) {
+         e.preventDefault();
+         let message = $('#message').val();
+         let id = $('#id').val();
+         $('#message').val('');
+         //  console.log(id);
+         $.ajax({
+             url: 'Chat/chatsave',
+             data: {
+                 message,
+                 id
+             },
+             type: 'POST',
+             success: function(data) {
+                 console.log('berhasil');
+                 //  //  let d = data;
+                 //  $.each(data, function(i, d) {
+                 //      $('#content').append(`<div class="row justify-content-end">
+                 //      <div class="col-md-6 mt-3">
+                 //      <input type="text" class="form-control" value="${d.pesan}">
+                 //      </div>
+                 //      </div>`);
+                 //  })
+             }
+         });
+         //  ajax tampil data
+         $.ajax({
+             url: 'Chat/getPesan',
+             type: 'GET',
+             dataType: 'JSON',
+             success: function(data) {
+                 //  console.log(data);
+                 $.each(data, function(i, d) {
+                     $('#content').append(`<div class="row justify-content-end">
+                      <div class="col-md-6 mt-3">
+                      <input type="text" class="form-control" value="${d.pesan}">
+                      </div>
+                      </div>`);
+                 })
+             }
+         });
      });
- </script> -->
- <!-- Option 2: Separate Popper and Bootstrap JS -->
- <!--
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    -->
+     //  akhir event on click
+     // event on load
+     $(document).ready(function() {
+         $.ajax({
+             url: 'Chat/getPesanAll',
+             type: 'GET',
+             dataType: 'JSON',
+             success: function(data) {
+                 //  console.log(data);
+                 $.each(data, function(i, d) {
+                     //  console.log(d);
+                     $('#content').append(`<div class="row justify-content-end">
+                      <div class="col-md-6 mt-3">
+                      <input type="text" class="form-control" value="${d.pesan}">
+                      </div>
+                      </div>`);
+                 })
+             }
+         });
+     });
+     // akir event on load
+     //  $(document).ready(function() {
+     //      let id = $('#id').val();
+     //      console.log(id);
+     //  });
+
+     //  sweet alert
+     $('.hapus').on('click', function(e) {
+         e.preventDefault();
+         var href = $(this).attr('href');
+         Swal.fire({
+             title: 'Are you sure?',
+             text: "You won't be able to revert this!",
+             icon: 'warning',
+             showCancelButton: true,
+             confirmButtonColor: '#3085d6',
+             cancelButtonColor: '#d33',
+             confirmButtonText: 'Ya, Hapus!',
+             cancelButtonText: 'Batal'
+         }).then((result) => {
+             if (result.value) {
+                 document.location.href = href;
+             }
+         })
+     })
+     //  akhir sweet alert
+     //  cek gambar sudah di upload dan tampilkan notif
+     $(document).ready(function() {
+         let id = $('#id_pembayaran').data('id');
+         console.log(id);
+
+         $.ajax({
+             url: base_url + 'Admin/cekGambar',
+             data: {
+                 id: id
+             },
+             type: 'POST',
+             dataType: 'JSON',
+             success: function(data) {
+                 console.log(data);
+             }
+         });
+     })
+     //  akhir cek gambar sudah di upload dan tampilkan notif
+ </script>
  </body>
 
  </html>

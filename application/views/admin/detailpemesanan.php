@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Daftar pemesanan</h1>
+    <h1 class="h3 mb-4 text-gray-800">List Pemesanan</h1>
     <!-- content -->
     <div class="container">
         <table class="table table-hover">
@@ -32,7 +32,7 @@
                 endforeach; ?>
             </tbody>
         </table>
+        <a href="<?= base_url('Admin/listPemesanan') ?>" class="btn btn-secondary"><i class="fas fa-long-arrow-alt-left"></i></a>
     </div>
-    <!-- end content -->
 </div>
 <!-- /.container-fluid -->

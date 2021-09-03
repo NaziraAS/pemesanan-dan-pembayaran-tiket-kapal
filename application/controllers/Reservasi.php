@@ -7,10 +7,8 @@ class Reservasi  extends CI_Controller
     {
         parent::__construct();
     }
-    public function index($data)
+    public function index()
     {
-        var_dump($data);
-        die;
         $data['title'] = "Halaman Reservasi";
         $this->load->view('layout/header', $data);
         $this->load->view('reservasi/reservasi');

@@ -24,7 +24,11 @@
                          <th scope="row"><?= $i ?></th>
                          <td><?= $lists['email'] ?></td>
                          <td><?= $lists['tgl_pemesanan'] ?></td>
-                         <td class="text-center"><a href="<?= base_url('Admin/sendEmail/' . $lists['id_pemesanan']) ?>" class="btn btn-success">Print tiket</a> <a href="<?= base_url('Admin/detail/' . $lists['id_pemesanan']) ?>" class="btn btn-warning">Detail tiket</a></td>
+                         <td class="text-center">
+                             <a href="<?= base_url('Admin/sendEmail/' . $lists['id_pemesanan']) ?>" class="btn btn-success"><i class="fa fa-paper-plane"></i></a>
+                             <a href="<?= base_url('Admin/detail/' . $lists['id_pemesanan']) ?>" class="btn btn-warning"><i class="fa fa-align-justify"></i></a>
+                             <a href="<?= base_url('Admin/info/' . $lists['id_pemesanan']) ?>" class="btn btn-secondary no-arrow"><i class="fas fa-fw fa-file-upload"></i><span class="badge badge-success badge-counter"><i class="fas fa-check"></i></span></a>
+                         </td>
                      </tr>
                  <?php $i++;
                     endforeach; ?>

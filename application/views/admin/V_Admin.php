@@ -17,10 +17,12 @@
                 <tr>
                     <th scope="col">No</th>
                     <th scope="col">Tanggal Keberangkatan</th>
+                    <th scope="col">Jam</th>
                     <th scope="col">Asal</th>
                     <th scope="col">Tujuan</th>
                     <th scope="col">Kelas</th>
                     <th scope="col">Harga</th>
+                    <th scope="col">Jumlah</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
@@ -32,19 +34,15 @@
                     <tr>
                         <th scope="row"><?= $no; ?></th>
                         <td><?= $j['tglBerangkat'] ?></td>
+                        <td><?= $j['jam'] ?></td>
                         <td><?= $j['asal'] ?></td>
                         <td><?= $j['tujuan'] ?></td>
                         <td><?= $j['kelas'] ?></td>
                         <td><?= $j['harga'] ?></td>
+                        <td><?= $j['jumlah'] ?></td>
                         <td>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <a href="<?= base_url('Admin/edit/') . $j['id'] ?>" class="btn btn-primary">Edit</a>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="<?= base_url('Admin/delete/') . $j['id'] ?>" class="btn btn-danger">Hapus</a>
-                                </div>
-                            </div>
+                            <a href="<?= base_url('Admin/edit/') . $j['id'] ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                            <a href="<?= base_url('Admin/delete/') . $j['id'] ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 <?php
@@ -63,19 +61,26 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tiket</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <!-- form insert data -->
-                        <form action="<?= base_url('Admin/insert') ?>" method="post">
+                        <form action="<?= base_url('Admin') ?>" method="post">
 
-                            <div class="form-group">
-                                <label for="tgl">Tanggal Keberangkatan</label>
-                                <input type="date" class="form-control" name="tgl" id="tgl" placeholder="Tanggal Keberangkatan">
-                                <?php echo form_error('tanggalkeberangkatan', '<div class="text-danger">', '</div>'); ?>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="tgl">Tanggal Keberangkatan</label>
+                                    <input type="date" class="form-control" name="tgl" id="tgl" placeholder="Tanggal Keberangkatan">
+                                    <?php echo form_error('tanggalkeberangkatan', '<div class="text-danger">', '</div>'); ?>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="jam">Jam</label>
+                                    <input type="time" class="form-control" name="jam" id="jam" placeholder="Jam">
+                                    <?php echo form_error('jam', '<div class="text-danger">', '</div>'); ?>
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -103,8 +108,13 @@
                                 <div class="form-group col-md">
                                     <label for="harga">Harga</label>
                                     <input type="text" class="form-control" name="harga" id="harga" placeholder="Harga">
+                                    <?php echo form_error('harga', '<div class="text-danger">', '</div>'); ?>
                                 </div>
-                                <?php echo form_error('harga', '<div class="text-danger">', '</div>'); ?>
+                                <div class="form-group col-md">
+                                    <label for="jumlah">Jumlah</label>
+                                    <input type="text" class="form-control" name="jumlah" id="harga" placeholder="Jumlah">
+                                    <?php echo form_error('jumlah', '<div class="text-danger">', '</div>'); ?>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
